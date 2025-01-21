@@ -30,4 +30,14 @@ public class GameService {
 		
 		return gameDto;
 	}
+	
+//	public List<GameRecordDto> findAllGames() {
+//		var result = gameRepository.findAll();
+//		
+//		List<GameRecordDto> gameDto = result.stream()
+//				.map(game -> new GameRecordDto(game)) // criação de um novo objeto GameRecordDto para cada game no stream.
+//	            .toList();
+//		
+//		return gameDto;
+//	}
 }
