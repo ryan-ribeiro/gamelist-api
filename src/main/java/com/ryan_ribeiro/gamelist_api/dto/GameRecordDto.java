@@ -1,19 +1,24 @@
 package com.ryan_ribeiro.gamelist_api.dto;
 
+import org.springframework.beans.BeanUtils;
+
 import com.ryan_ribeiro.gamelist_api.entities.Game;
 
-import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
+public record GameRecordDto(
+	Long id,
+	String title,
+	Integer year,
+	String genre,
+	String platforms,
+	Double score,
+	String imgUrl,
+	String shortDescription,
+	String longDescription) {
 
-public record GameRecordDto (
-	@Valid Long id,
-	@Valid @NotBlank String title,
-	@Valid @NotBlank Integer year,
-	@Valid @NotBlank String imgUrl,
-	@Valid @NotBlank String shortDescription){
+	public GameRecordDto(Game game) {
+		this(game.getId(), game.getTitle(), game.getYear(), game.getGenre(),
+			 game.getPlatforms(), game.getScore(), game.getImgUrl(),
+			 game.getShortDescription(), game.getLongDescription());
+	}
 	
-	// Construtor que recebe um Game e cria um GameRecordDto a partir dele
-    public GameRecordDto(Game game) {
-        this(game.getId(), game.getTitle(), game.getYear(), game.getImgUrl(), game.getShortDescription());
-    }
 }

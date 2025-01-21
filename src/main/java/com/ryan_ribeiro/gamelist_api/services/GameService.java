@@ -1,10 +1,15 @@
 package com.ryan_ribeiro.gamelist_api.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.ryan_ribeiro.gamelist_api.dto.GameMinRecordDto;
 import com.ryan_ribeiro.gamelist_api.dto.GameRecordDto;
 import com.ryan_ribeiro.gamelist_api.entities.Game;
 import com.ryan_ribeiro.gamelist_api.repositories.GameRepository;
@@ -15,11 +20,12 @@ public class GameService {
 	@Autowired
 	private GameRepository gameRepository;
 	
-	public List<GameRecordDto> findAllGames() {
+	@Transactional(readOnly = true)
+	public List<GameMinRecordDto> findAllGames() {
 		var result = gameRepository.findAll();
 		
-		List<GameRecordDto> gameDto = result.stream()
-				.map(game -> new GameRecordDto(
+		List<GameMinRecordDto> gameDto = result.stream()
+				.map(game -> new GameMinRecordDto(
 				game.getId(),
                 game.getTitle(),
                 game.getYear(),
@@ -31,6 +37,7 @@ public class GameService {
 		return gameDto;
 	}
 	
+//	@Transactional(readOnly = true)
 //	public List<GameRecordDto> findAllGames() {
 //		var result = gameRepository.findAll();
 //		
@@ -40,4 +47,10 @@ public class GameService {
 //		
 //		return gameDto;
 //	}
+	
+	@Transactional(readOnly = true)
+	public GameRecordDto findById(Long id) {
+		Game result = gameRepository.findById(id).get();
+		return new GameRecordDto(result);
+	}
 }
