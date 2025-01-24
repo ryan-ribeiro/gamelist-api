@@ -30,4 +30,10 @@ public class GameController {
 		GameRecordDto result = gameService.findById(id);
 		return result;
 	}
+	
+	@GetMapping(value = "/title/{title}")
+	public List<GameMinRecordDto> findById(@PathVariable String title) {
+		var result = gameService.findByTitle(title);
+		return result;
+	}
 }

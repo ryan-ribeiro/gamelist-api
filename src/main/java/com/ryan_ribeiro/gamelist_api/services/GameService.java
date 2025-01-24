@@ -68,4 +68,21 @@ public class GameService {
 		
 		return gameDto;
 	}
+	
+	@Transactional(readOnly = true)
+	public List<GameMinRecordDto> findByTitle(String title) {
+		List<GameMinProjection> list = gameRepository.searchByTitle(title);
+		
+		List<GameMinRecordDto> gameDto = list.stream()
+				.map(game -> new GameMinRecordDto(
+				game.getId(),
+                game.getTitle(),
+                game.getYear(),
+                game.getImgUrl(),
+                game.getShortDescription()
+                ))
+				.toList();
+		
+		return gameDto;
+	}
 }
