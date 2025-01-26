@@ -1,6 +1,9 @@
 package com.ryan_ribeiro.gamelist_api.entities;
 
+import java.io.Serializable;
 import java.util.Objects;
+
+import org.springframework.hateoas.RepresentationModel;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -11,7 +14,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "TB_GAME")
-public class Game {
+public class Game extends RepresentationModel<Game >implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

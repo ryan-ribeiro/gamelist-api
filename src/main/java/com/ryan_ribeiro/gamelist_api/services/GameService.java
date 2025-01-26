@@ -1,6 +1,7 @@
 package com.ryan_ribeiro.gamelist_api.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -47,9 +48,8 @@ public class GameService {
 //	}
 	
 	@Transactional(readOnly = true)
-	public GameRecordDto findById(Long id) {
-		Game result = gameRepository.findById(id).get();
-		return new GameRecordDto(result);
+	public Optional<GameRecordDto> findById(Long id) {
+		return Optional.ofNullable(findById(id).orElse(null));
 	}
 	
 	@Transactional(readOnly = true)
@@ -84,5 +84,18 @@ public class GameService {
 				.toList();
 		
 		return gameDto;
+	}
+	
+	@Transactional(readOnly = true)
+	public GameRecordDto saveGame(Game game) throws Exception {
+		if(game.getId() != null) {
+			Game jogoExistente = gameRepository.findById(game.getId()).orElse(null);
+			
+			if(jogoExistente != null) {
+				throw new Exception("Jogo já cadastrado com o ID fornecido");
+			}
+		}
+		Game savedGame = gameRepository.save(game);
+		return new GameRecordDto(savedGame);
 	}
 }

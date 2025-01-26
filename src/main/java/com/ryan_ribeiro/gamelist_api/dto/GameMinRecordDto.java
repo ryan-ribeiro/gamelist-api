@@ -7,11 +7,11 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 
 public record GameMinRecordDto (
-	@Valid Long id,
-	@Valid @NotBlank String title,
-	@Valid @NotBlank Integer year,
-	@Valid @NotBlank String imgUrl,
-	@Valid @NotBlank String shortDescription){
+	Long id,
+	@NotBlank String title,
+	@NotBlank Integer year,
+	@NotBlank String imgUrl,
+	@NotBlank String shortDescription){
 	
 	// Construtor que recebe um Game e cria um GameRecordDto a partir dele
     public GameMinRecordDto(Game game) {

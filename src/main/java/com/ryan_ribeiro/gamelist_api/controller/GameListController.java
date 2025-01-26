@@ -3,6 +3,8 @@ package com.ryan_ribeiro.gamelist_api.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,15 +29,21 @@ public class GameListController {
 	private GameService gameService;
 	
 	@GetMapping
-	public List<GameListRecordDto> findAllGames() {
+	public ResponseEntity<List<GameListRecordDto>> findAllGames() {
 		List<GameListRecordDto> result = gameListService.findAllGames();
-		return result;
+		if(result.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+		return ResponseEntity.ok(result);
 	}
 	
 	@GetMapping(value = "/{listId}/games")
-	public List<GameMinRecordDto> findByList(@PathVariable Long listId) {
+	public ResponseEntity<List<GameMinRecordDto>> findByList(@PathVariable Long listId) {
 		List<GameMinRecordDto> result = gameService.findByList(listId);
-		return result;
+		if(result.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+		return ResponseEntity.ok(result);
 	}
 	
 	@PostMapping(value = "/{listId}/replacement")

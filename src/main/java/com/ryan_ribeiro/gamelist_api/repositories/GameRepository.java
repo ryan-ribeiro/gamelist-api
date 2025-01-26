@@ -36,7 +36,7 @@ public interface GameRepository extends JpaRepository<Game, Long>{
 			    tb_belonging.position
 			FROM
 			    tb_game
-			INNER JOIN
+			LEFT JOIN
 			    tb_belonging ON tb_game.id = tb_belonging.game_id
 			WHERE
 			    LOWER(tb_game.title) LIKE LOWER(:title || '%')
