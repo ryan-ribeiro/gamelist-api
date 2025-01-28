@@ -5,17 +5,15 @@ import java.util.Optional;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.client.HttpClientErrorException.NotFound;
 
 import com.ryan_ribeiro.gamelist_api.dto.GameMinRecordDto;
 import com.ryan_ribeiro.gamelist_api.dto.GameRecordDto;
@@ -49,11 +47,21 @@ public class GameController {
 		return ResponseEntity.status(HttpStatus.OK).body(game.get());
 	}
 	
-	@GetMapping(value = "/title/{title}")
+	@GetMapping(value = "/search/title/{title}")
 	public ResponseEntity<Object> findByTitle(@PathVariable String title) {
 		var result = gameService.findByTitle(title);
 		if(result.isEmpty()) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No games found with the title '" + title + "'");
+		}
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body(result);
+	}
+	
+	@GetMapping(value = "/search/score")
+	public ResponseEntity<Object> searchByScore(@RequestParam(defaultValue = "0.0") Double minScore, 
+												@RequestParam(defaultValue = "5.0") Double maxScore) {
+		var result = gameService.searchByScore(minScore, maxScore);
+		if(result.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No games found within the scores");
 		}
 		return ResponseEntity.status(HttpStatus.ACCEPTED).body(result);
 	}

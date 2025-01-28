@@ -2,6 +2,7 @@ package com.ryan_ribeiro.gamelist_api.repositories;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -44,5 +45,15 @@ public interface GameRepository extends JpaRepository<Game, Long>{
 			    tb_game.score;
 	        """)
 	List<GameMinProjection> searchByTitle(@Param("title") String title);
+	
+	// JPA Query Method CONTAINING e IGNORECASE, equivalente à consulta acima
+	List<Game> findByTitleContainingIgnoreCase(String title);
+	
+//	@Query("SELECT g FROM Game g WHERE g.score >= :minScore AND g.score <= :maxScore ORDER BY g.score DESC")
+//	List<GameMinProjection> searchByScore(@Param("minScore") Double minScore, @Param("maxScore") Double maxScore);
+	
+	// JPA Query Method BETWEEN; Perceba que é necessário retornar uma Lista de entidade, e não de Dto de Entidade
+	// É equivalente à consulta acima.
+	List<Game> findByScoreBetween(Double minScore, Double maxScore);
 }
 	

@@ -14,7 +14,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "TB_GAME")
-public class Game extends RepresentationModel<Game >implements Serializable{
+public class Game {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

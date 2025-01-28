@@ -87,6 +87,23 @@ public class GameService {
 	}
 	
 	@Transactional(readOnly = true)
+	public List<GameMinRecordDto> searchByScore(Double minScore, Double maxScore) {
+		List<Game> list = gameRepository.findByScoreBetween(minScore, maxScore);
+		
+		List<GameMinRecordDto> gameDto = list.stream()
+				.map(game -> new GameMinRecordDto(
+				game.getId(),
+                game.getTitle(),
+                game.getYear(),
+                game.getImgUrl(),
+                game.getShortDescription()
+                ))
+				.toList();
+		
+		return gameDto;
+	}
+	
+	@Transactional(readOnly = true)
 	public GameRecordDto saveGame(Game game) throws Exception {
 		if(game.getId() != null) {
 			Game jogoExistente = gameRepository.findById(game.getId()).orElse(null);
