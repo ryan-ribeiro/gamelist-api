@@ -2,6 +2,7 @@ package com.ryan_ribeiro.gamelist_api.entities;
 
 import java.util.Objects;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -10,11 +11,11 @@ import jakarta.persistence.ManyToOne;
 public class BelongingPK {
 	
 	@ManyToOne
-	@JoinColumn(name = "game_id")
+	@JoinColumn(name = "game_id", nullable = false)
 	private Game game;
 	
 	@ManyToOne
-	@JoinColumn(name = "list_id")
+	@JoinColumn(name = "list_id", nullable = false)
 	private GameList list;
 	
 	public BelongingPK() {

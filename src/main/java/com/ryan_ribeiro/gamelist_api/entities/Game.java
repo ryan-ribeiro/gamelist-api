@@ -21,17 +21,21 @@ public class Game {
 	private Long id;
 	private String title;
 	
-	@Column(name = "game_year")
+	@Column(name = "game_year", nullable = false)
 	private Integer year;
+	@Column(nullable = false)
 	private String genre;
+	@Column(nullable = false)
 	private String platforms;
+	@Column(nullable = false)
 	private Double score;
+	@Column(nullable = false)
 	private String imgUrl;
 	
-	@Column(columnDefinition = "TEXT")
+	@Column(columnDefinition = "TEXT", nullable = false)
 	private String shortDescription;
 	
-	@Column(columnDefinition = "TEXT")
+	@Column(columnDefinition = "TEXT", nullable = false)
 	private String longDescription;
 	
 	public Game() {

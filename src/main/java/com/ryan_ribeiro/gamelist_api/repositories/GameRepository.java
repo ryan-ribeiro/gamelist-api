@@ -47,7 +47,7 @@ public interface GameRepository extends JpaRepository<Game, Long>{
 	List<GameMinProjection> searchByTitle(@Param("title") String title);
 	
 	// JPA Query Method CONTAINING e IGNORECASE, equivalente à consulta acima
-	List<Game> findByTitleContainingIgnoreCase(String title);
+//	List<Game> findByTitleContainingIgnoreCase(String title);
 	
 //	@Query("SELECT g FROM Game g WHERE g.score >= :minScore AND g.score <= :maxScore ORDER BY g.score DESC")
 //	List<GameMinProjection> searchByScore(@Param("minScore") Double minScore, @Param("maxScore") Double maxScore);
